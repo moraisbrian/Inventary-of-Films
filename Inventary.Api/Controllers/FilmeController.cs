@@ -1,10 +1,12 @@
 using Inventary.Application.DTOs;
 using Inventary.Application.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Inventary.Api.Controllers;
 
 [ApiController]
+[Authorize]
 [Route("api/filmes")]
 public class FilmeController : ControllerBase
 {

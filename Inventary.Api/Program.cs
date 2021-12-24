@@ -1,4 +1,7 @@
+using System.Text;
 using Inventary.Ioc;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +21,27 @@ builder.Services.AddCors(options =>
         .AllowAnyMethod());
 });
 
+// JWT
+builder.Services.AddAuthentication(options => 
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options => {
+    options.RequireHttpsMetadata = true;
+    options.SaveToken = true;
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(builder.Configuration["Auth:Secret"])),
+        ValidateIssuer = true,
+        ValidateLifetime = true,
+        ValidateAudience = true,
+        ValidAudience = builder.Configuration["Auth:Audience"],
+        ValidIssuer = builder.Configuration["Auth:Issuer"]
+    };
+});
+
 // IoC Configuration
 builder.Services.ConfigureServices(builder.Configuration);
 
@@ -33,6 +57,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseCors();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 

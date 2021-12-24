@@ -10,4 +10,5 @@ public class ApplicationDbContext : DbContext
     }
 
     public DbSet<Filme>? Filmes { get; set; }
+    public DbSet<Usuario>? Usuarios { get; set; }
 }

@@ -19,5 +19,7 @@ public static class Setup
 
         services.AddScoped<IFilmeRepository, FilmeRepository>();
         services.AddScoped<IFilmeService, FilmeService>();
+        services.AddScoped<IUsuarioService, UsuarioService>();
+        services.AddScoped<IUsuarioRepository, UsuarioRepository>();
     }
 }

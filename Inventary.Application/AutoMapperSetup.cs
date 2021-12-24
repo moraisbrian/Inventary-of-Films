@@ -11,5 +11,10 @@ public class AutoMapperSetup : Profile
         CreateMap<FilmeDto, Filme>();
         CreateMap<Filme[], IEnumerable<FilmeDto>>();
         CreateMap<FilmeDto[], IEnumerable<Filme>>();
+
+        CreateMap<Usuario, UsuarioDto>();
+        CreateMap<UsuarioDto, Usuario>();
+        CreateMap<Usuario[], IEnumerable<UsuarioDto>>();
+        CreateMap<UsuarioDto[], IEnumerable<Usuario>>();
     }
 }
